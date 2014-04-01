@@ -1,0 +1,22 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.9'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "io.dropwizard:dropwizard-core:0.7.0-rc3",
+            "io.dropwizard:dropwizard-views:0.7.0-rc3",
+            "io.dropwizard:dropwizard-client:0.7.0-rc3",
+            "com.google.inject:guice:3.0",
+            "com.google.inject.extensions:guice-servlet:3.0",
+            "com.sun.jersey.contribs:jersey-guice:1.18.1"
+
+    testCompile "junit:junit-dep:4.11",
+                "org.mockito:mockito-core:1.9.5"
+}
