@@ -22,7 +22,7 @@ public class ArrivalsParserTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void parse_shouldRemoveCarriageReturnsAndWhitespace() throws Exception {
+    public void parse_shouldRemoveCarriageReturnsAndNewlines() throws Exception {
         ArrivalsParser parser = new ArrivalsParser(objectMapper);
 
         parser.parse("[1,2,3,4]\n\r[5,6,7,8]\n");
