@@ -12,6 +12,7 @@ repositories {
 dependencies {
     compile "io.dropwizard:dropwizard-core:0.7.0-rc3",
             "io.dropwizard:dropwizard-views:0.7.0-rc3",
+            "io.dropwizard:dropwizard-views-freemarker:0.7.0-rc3",
             "io.dropwizard:dropwizard-client:0.7.0-rc3",
             "com.google.inject:guice:3.0",
             "com.google.inject.extensions:guice-servlet:3.0",

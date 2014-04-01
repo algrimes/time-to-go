@@ -5,6 +5,7 @@ import com.testupstream.timetogo.resources.ArrivalsResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
 
 public class TimeToGoApp extends Application<TimeToGoConfig> {
 
@@ -14,6 +15,7 @@ public class TimeToGoApp extends Application<TimeToGoConfig> {
 
     @Override
     public void initialize(Bootstrap<TimeToGoConfig> bootstrap) {
+        bootstrap.addBundle(new ViewBundle());
         bootstrap.addBundle(new TimeToGoGuiceBundle());
     }
 
