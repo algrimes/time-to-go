@@ -16,6 +16,7 @@ public class ArrivalsParser {
     private static final int ETA_POSITIONAL_INDEX = 4;
     private static final int ROUTE_POSITIONAL_INDEX = 2;
     private static final int STOP_NAME_POSITIONAL_INDEX = 1;
+    private static final int DESTINATION_POSITIONAL_INDEX = 3;
 
     @Inject
     public ArrivalsParser(ObjectMapper objectMapper) {
@@ -35,8 +36,8 @@ public class ArrivalsParser {
                     //Indicies using arcane knowledge of search query for now
                     jsonNode.get(i).path(ETA_POSITIONAL_INDEX).asLong(),
                     jsonNode.get(i).path(ROUTE_POSITIONAL_INDEX).asText(),
-                    jsonNode.get(i).path(STOP_NAME_POSITIONAL_INDEX).asText()
-                ));
+                    jsonNode.get(i).path(STOP_NAME_POSITIONAL_INDEX).asText(),
+                    jsonNode.get(i).path(DESTINATION_POSITIONAL_INDEX).asText()));
             }
         } catch (IOException e) {
             throw new RuntimeException("Unable to parse response", e);

@@ -16,7 +16,7 @@ public class ArrivalTest {
 
         long eta = DateTimeFactory.now().plusMinutes(7).getMillis();
 
-        Arrival arrival = new Arrival(eta, "55", "Pritchard's Road");
+        Arrival arrival = new Arrival(eta, "55", "Pritchard's Road", "Oxford Circus");
 
         assertThat(arrival.getEta(), is("7 mins"));
     }

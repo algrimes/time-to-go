@@ -6,9 +6,9 @@
 </head>
 <body>
 <table class="table table-striped">
-    <tr><th>ETA</th><th>Stop Name</th><th>Route</th></tr>
+    <tr><th>ETA</th><th>Stop Name</th><th>Route</th><th>Destination</th></tr>
     <#list arrivals as arrival>
-    <tr><td>${arrival.eta}</td><td>${arrival.stopName}</td><td>${arrival.route}</td></tr>
+    <tr><td>${arrival.eta}</td><td>${arrival.stopName}</td><td>${arrival.route}</td><td>${arrival.destination}</td></tr>
     </#list>
 </table>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

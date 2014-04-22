@@ -12,14 +12,16 @@ public class Arrival {
     private long eta;
     private String route;
     private String stopName;
+    private String destination;
 
     @SuppressWarnings("unused") //Jaxb
     private Arrival() {}
 
-    public Arrival(long eta, String route, String stopName) {
+    public Arrival(long eta, String route, String stopName, String destination) {
         this.eta = eta;
         this.route = route;
         this.stopName = stopName;
+        this.destination = destination;
     }
 
     public String getEta() {
@@ -34,5 +36,9 @@ public class Arrival {
 
     public String getStopName() {
         return stopName;
+    }
+
+    public String getDestination() {
+        return destination;
     }
 }
