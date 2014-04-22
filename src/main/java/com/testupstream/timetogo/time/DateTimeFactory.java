@@ -4,18 +4,14 @@ import org.joda.time.DateTime;
 
 public class DateTimeFactory {
 
-    private static DateTime date = DateTime.now();
+    private static DateTime date;
 
     public static void freezeTime(DateTime dateTime) {
         date = dateTime;
     }
 
-    public static void unfreezeTime() {
-        date = DateTime.now();
-    }
-
     public static DateTime now() {
-        return date;
+        return date != null ? date : DateTime.now();
     }
 
 }
