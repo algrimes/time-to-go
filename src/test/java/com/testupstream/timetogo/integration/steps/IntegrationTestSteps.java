@@ -13,11 +13,11 @@ public class IntegrationTestSteps {
     private String baseUri = "http://localhost:9998";
 
     public void theFollowingArrivalsAreDue(Arrival arrival) {
-        when(IntegrationTestRunner.injector.getInstance(ArrivalsProxy.class).getLocalArrivals()).thenReturn(asList(arrival));
+        when(IntegrationTestRunner.getInjector().getInstance(ArrivalsProxy.class).getLocalArrivals()).thenReturn(asList(arrival));
     }
 
     public String arrivalsAreRequested() {
-        return IntegrationTestRunner.resourceTestHarness.client().resource(baseUri + Uris.ARRIVALS_PATH).get(String.class);
+        return IntegrationTestRunner.getResourceTestHarness().client().resource(baseUri + Uris.ARRIVALS_PATH).get(String.class);
     }
 
 }

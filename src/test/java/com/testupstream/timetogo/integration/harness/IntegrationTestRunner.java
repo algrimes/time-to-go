@@ -24,16 +24,16 @@ import static org.mockito.Mockito.mock;
 
 public class IntegrationTestRunner extends BlockJUnit4ClassRunner {
 
-    private static ArrivalsProxy arrivalsProxy = mock(ArrivalsProxy.class);
+    private static final ArrivalsProxy arrivalsProxy = mock(ArrivalsProxy.class);
 
-    public static Injector injector = Guice.createInjector(Stage.PRODUCTION, Modules.override(new TimeToGoModule()).with(new Module() {
+    private static final Injector injector = Guice.createInjector(Stage.PRODUCTION, Modules.override(new TimeToGoModule()).with(new Module() {
         @Override
         public void configure(Binder binder) {
             binder.bind(ArrivalsProxy.class).toInstance(arrivalsProxy);
         }
     }));
 
-    public static final ResourceTestRule resourceTestHarness =
+    private static final ResourceTestRule resourceTestHarness =
             new ResourceTestRule.Builder()
                     .addResource(injector.getInstance(ArrivalsResource.class))
                     .addResource(new TestMessageBodyWriter())
@@ -53,5 +53,13 @@ public class IntegrationTestRunner extends BlockJUnit4ClassRunner {
                     resourceTestHarness}), description);
             runLeaf(rules, description, notifier);
         }
+    }
+
+    public static ResourceTestRule getResourceTestHarness() {
+        return resourceTestHarness;
+    }
+
+    public static Injector getInjector() {
+        return injector;
     }
 }
