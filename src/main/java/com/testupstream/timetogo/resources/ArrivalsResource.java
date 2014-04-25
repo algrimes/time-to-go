@@ -1,9 +1,7 @@
 package com.testupstream.timetogo.resources;
 
 import com.google.inject.Inject;
-import com.testupstream.timetogo.proxy.ArrivalsHttpProxy;
 import com.testupstream.timetogo.proxy.ArrivalsProxy;
-import com.testupstream.timetogo.uris.Uris;
 import com.testupstream.timetogo.views.ArrivalsView;
 
 import javax.ws.rs.GET;
