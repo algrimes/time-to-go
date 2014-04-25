@@ -6,7 +6,7 @@ import com.testupstream.timetogo.model.Arrival;
 
 import java.util.List;
 
-public class ArrivalsHttpProxy {
+public class ArrivalsHttpProxy implements ArrivalsProxy {
 
     private final Client client;
     private final ArrivalsParser arrivalsParser;

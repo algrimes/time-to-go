@@ -4,11 +4,9 @@ import com.google.common.base.Function;
 import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Module;
-import com.google.inject.Scopes;
 import com.google.inject.Stage;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.util.Modules;
-import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
@@ -33,12 +31,7 @@ public class TimeToGoGuiceBundle implements Bundle {
                         binder.bind(GuiceContainer.class).toInstance(container);
                     }
                 }
-        ), new Module() {
-            @Override
-            public void configure(Binder binder) {
-                binder.bind(Client.class).in(Scopes.SINGLETON);
-            }
-        });
+        ), new TimeToGoModule());
     }
 
     @Override

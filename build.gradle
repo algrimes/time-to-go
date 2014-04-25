@@ -20,5 +20,6 @@ dependencies {
             "com.sun.jersey.contribs:jersey-guice:1.18.1"
 
     testCompile "junit:junit-dep:4.11",
-                "org.mockito:mockito-core:1.9.5"
+                "org.mockito:mockito-core:1.9.5",
+                "io.dropwizard:dropwizard-testing:0.7.0-rc3"
 }
