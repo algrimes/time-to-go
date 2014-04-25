@@ -1,10 +1,5 @@
 package com.testupstream.timetogo.bundles;
 
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.ws.rs.core.Application;
-
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Scope;
@@ -18,6 +13,9 @@ import com.sun.jersey.spi.container.WebApplication;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 import com.sun.jersey.spi.container.servlet.WebConfig;
 
+import javax.servlet.ServletException;
+import java.util.Map;
+
 @Singleton
 public class GuiceContainer extends ServletContainer {
 
@@ -25,8 +23,6 @@ public class GuiceContainer extends ServletContainer {
 
     @Inject
     private Injector injector;
-
-    private WebApplication webapp;
 
     private ResourceConfig resourceConfig = new DefaultResourceConfig();
 
@@ -44,17 +40,6 @@ public class GuiceContainer extends ServletContainer {
         }
     }
 
-    public GuiceContainer() {
-    }
-
-    public GuiceContainer(Application app) {
-        super(app);
-    }
-
-    public GuiceContainer(Class<? extends Application> app) {
-        super(app);
-    }
-
     public void setResourceConfig(ResourceConfig resourceConfig) {
         this.resourceConfig = resourceConfig;
     }
@@ -66,11 +51,7 @@ public class GuiceContainer extends ServletContainer {
 
     @Override
     protected void initiate(ResourceConfig config, WebApplication webapp) {
-        this.webapp = webapp;
         webapp.initiate(config, new ServletGuiceComponentProviderFactory(config, injector));
     }
 
-    public WebApplication getWebApplication() {
-        return webapp;
-    }
 }
