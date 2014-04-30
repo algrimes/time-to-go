@@ -6,9 +6,9 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.google.inject.util.Modules;
+import com.testupstream.timetogo.TimeToGoApp;
 import com.testupstream.timetogo.bundles.TimeToGoModule;
 import com.testupstream.timetogo.proxy.ArrivalsProxy;
-import com.testupstream.timetogo.resources.ArrivalsResource;
 import io.dropwizard.testing.junit.ResourceTestRule;
 
 import static org.mockito.Mockito.mock;
@@ -26,13 +26,10 @@ public class IntegrationTestHarness {
         }
     }));
 
-    private final ResourceTestRule jersey =
-            new ResourceTestRule.Builder()
-                    .addResource(injector.getInstance(ArrivalsResource.class))
-                    .addResource(new TestMessageBodyWriter())
-                    .build();
+    private final ResourceTestRule jersey = setUpRule();
 
     private IntegrationTestHarness() {}
+
 
     public static IntegrationTestHarness getHarness() {
         if(harness == null) {
@@ -50,6 +47,16 @@ public class IntegrationTestHarness {
     }
 
     public Object clone() throws CloneNotSupportedException {
+        super.clone();
         throw new CloneNotSupportedException();
+    }
+
+    private ResourceTestRule setUpRule() {
+        ResourceTestRule.Builder builder = new ResourceTestRule.Builder()
+                .addResource(new TestMessageBodyWriter());
+        for (Class resource : new TimeToGoApp().getResources()) {
+            builder.addResource(injector.getInstance(resource));
+        }
+        return builder.build();
     }
 }

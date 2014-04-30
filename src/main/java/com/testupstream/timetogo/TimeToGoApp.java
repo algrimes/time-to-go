@@ -8,6 +8,11 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 public class TimeToGoApp extends Application<TimeToGoConfig> {
 
     public static void main(String[] args) throws Exception {
@@ -23,6 +28,12 @@ public class TimeToGoApp extends Application<TimeToGoConfig> {
 
     @Override
     public void run(TimeToGoConfig configuration, Environment environment) throws Exception {
-        environment.jersey().register(ArrivalsResource.class);
+        for (Object resource : getResources()) {
+            environment.jersey().register(resource);
+        }
+    }
+
+    public List<Class> getResources() {
+        return Arrays.<Class>asList(ArrivalsResource.class);
     }
 }
