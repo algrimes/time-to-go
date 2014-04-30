@@ -12,7 +12,7 @@ public class ArrivalTest {
 
     @Test
     public void getEta_shouldDisplayFriendlyEtaBasedOnCurrentTime() throws Exception {
-        DateTimeFactory.freezeTime(DateTime.now());
+        DateTimeFactory.freezeTime(DateTimeFactory.now());
 
         long eta = DateTimeFactory.now().plusMinutes(7).getMillis();
 
