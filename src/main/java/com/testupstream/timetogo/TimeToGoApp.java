@@ -28,7 +28,7 @@ public class TimeToGoApp extends Application<TimeToGoConfig> {
 
     @Override
     public void run(TimeToGoConfig configuration, Environment environment) throws Exception {
-        for (Object resource : getResources()) {
+        for (Class resource : getResources()) {
             environment.jersey().register(resource);
         }
     }
