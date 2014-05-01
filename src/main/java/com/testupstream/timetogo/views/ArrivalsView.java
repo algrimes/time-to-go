@@ -3,6 +3,8 @@ package com.testupstream.timetogo.views;
 import com.testupstream.timetogo.model.Arrival;
 import io.dropwizard.views.View;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ArrivalsView extends View {
@@ -15,6 +17,16 @@ public class ArrivalsView extends View {
     }
 
     public List<Arrival> getArrivals() {
+        return destinationSortedList(arrivals);
+    }
+
+    private List<Arrival> destinationSortedList(List<Arrival> arrivals) {
+        Collections.sort(arrivals, new Comparator<Arrival>() {
+            @Override
+            public int compare(Arrival arrival1, Arrival arrival2) {
+                return arrival1.getDestination().compareTo(arrival2.getDestination());
+            }
+        });
         return arrivals;
     }
 }
