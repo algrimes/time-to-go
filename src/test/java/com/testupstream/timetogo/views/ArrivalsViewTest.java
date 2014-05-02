@@ -13,23 +13,29 @@ import static org.junit.Assert.assertThat;
 public class ArrivalsViewTest {
 
     @Test
-    public void getArrivals_shouldDisplayArrivalsAlphabeticallyInDestinationOrder() throws Exception {
+    public void getArrivals_shouldGroupArrivalsByDestination() throws Exception {
 
-        String destinationBeginningWithA = "Aardvark St.";
-        String destinationBeginningWithE = "Elephant Way";
-        String destinationBeginningWithS = "Salamader Rd.";
+        String destinationOne = "Aardvark St.";
+        String destinationTwo = "Elephant Way";
 
         List<Arrival> arrivalsList = asList(
-                anArrival().withDestination("Barracuda Ave.").build(),
-                anArrival().withDestination(destinationBeginningWithS).build(),
-                anArrival().withDestination(destinationBeginningWithA).build(),
-                anArrival().withDestination(destinationBeginningWithE).build()
+                anArrival().withDestination(destinationTwo).build(),
+                anArrival().withDestination(destinationOne).build(),
+                anArrival().withDestination(destinationOne).build(),
+                anArrival().withDestination(destinationOne).build(),
+                anArrival().withDestination(destinationTwo).build()
         );
 
         ArrivalsView arrivalsView = new ArrivalsView(arrivalsList);
 
-        assertThat(arrivalsView.getArrivals().get(0).getDestination(), is(destinationBeginningWithA));
-        assertThat(arrivalsView.getArrivals().get(3).getDestination(), is(destinationBeginningWithS));
-        assertThat(arrivalsView.getArrivals().get(2).getDestination(), is(destinationBeginningWithE));
+        assertThat(arrivalsView.getArrivals().get(destinationOne).size(), is(3));
+        for (Arrival arrival : arrivalsView.getArrivals().get(destinationOne)) {
+            assertThat(arrival.getDestination(), is(destinationOne));
+        }
+
+        assertThat(arrivalsView.getArrivals().get(destinationTwo).size(), is(2));
+        for (Arrival arrival : arrivalsView.getArrivals().get(destinationTwo)) {
+            assertThat(arrival.getDestination(), is(destinationTwo));
+        }
     }
 }
