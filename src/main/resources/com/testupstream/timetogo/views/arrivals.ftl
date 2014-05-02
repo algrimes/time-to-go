@@ -3,6 +3,7 @@
 <head>
     <title>Local bus departures</title>
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/time-to-go.css">
 </head>
 <body>
 <table class="table table-striped">
