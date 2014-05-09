@@ -7,6 +7,8 @@ import com.testupstream.timetogo.views.viewmodels.ArrivalGroup;
 import com.testupstream.timetogo.views.viewmodels.Eta;
 import io.dropwizard.views.View;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +19,7 @@ public class ArrivalsView extends View {
 
     public ArrivalsView(List<Arrival> arrivals) {
         super("arrivals.ftl");
-        groupByDestStopAndRoute(arrivals);
+        groupAndSortByTime(arrivals);
     }
 
     //It would be a map of groups and etas,
@@ -31,14 +33,21 @@ public class ArrivalsView extends View {
         return etas.get(arrivalGroup);
     }
 
-    private void groupByDestStopAndRoute(List<Arrival> arrivals) {
+    private void groupAndSortByTime(List<Arrival> arrivals) {
         this.arrivalGroups = Sets.newHashSet();
         this.etas = LinkedListMultimap.create();
+        Collections.sort(arrivals,new Comparator<Arrival>() {
+                @Override
+                public int compare(Arrival arrival1, Arrival arrival2) {
+                    return Long.valueOf(arrival1.getEta()).compareTo(arrival2.getEta());
+                }
+            });
         for (Arrival arrival : arrivals) {
             ArrivalGroup group = new ArrivalGroup(arrival.getStopName(), arrival.getDestination(), arrival.getRoute());
             arrivalGroups.add(group);
             etas.put(group, new Eta(arrival.getEta()));
         }
+
     }
 
 }

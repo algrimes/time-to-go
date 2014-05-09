@@ -5,6 +5,7 @@ import java.util.Random;
 public class ArrivalBuilder {
 
 
+    private long eta = new Random(2).nextLong();
     private String destination = "Oxford Circus";
     private String stopName = "Pritchards Rd";
     private String route = "55";
@@ -14,7 +15,7 @@ public class ArrivalBuilder {
     }
 
     public Arrival build() {
-        return new Arrival(new Random(2).nextLong(), route, stopName, destination);
+        return new Arrival(eta, route, stopName, destination);
     }
 
     public ArrivalBuilder withDestination(String destination) {
@@ -29,6 +30,11 @@ public class ArrivalBuilder {
 
     public ArrivalBuilder withRoute(String route) {
         this.route = route;
+        return this;
+    }
+
+    public ArrivalBuilder withEta(long eta) {
+        this.eta = eta;
         return this;
     }
 }
