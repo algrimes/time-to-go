@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="/assets/css/time-to-go.css">
 </head>
 <body>
-<#list arrivals?keys as destination>
-        <h4>${destination}</h4>
+<#list arrivalGroups as group>
+        <h4>Route: ${group.getRoute()} to ${group.getDestination()} (${group.getStop()})</h4>
         <table class="table table-striped">
-            <tr><th>ETA</th><th>Stop Name</th><th>Route</th></tr>
-            <#list arrivals[destination] as arrival>
-            <tr><td>${arrival.eta}</td><td>${arrival.stopName}</td><td>${arrival.route}</td></tr>
+            <tr><th>ETA</th>
+            <#list getEtas(group) as eta>
+            <tr><td>${eta.getEta()}</td></tr>
             </#list>
         </table>
 </#list>

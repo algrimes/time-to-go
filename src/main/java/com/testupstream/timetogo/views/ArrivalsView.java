@@ -1,44 +1,44 @@
 package com.testupstream.timetogo.views;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Sets;
 import com.testupstream.timetogo.model.Arrival;
+import com.testupstream.timetogo.views.viewmodels.ArrivalGroup;
+import com.testupstream.timetogo.views.viewmodels.Eta;
 import io.dropwizard.views.View;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import static com.google.common.collect.Maps.newHashMap;
-import static java.util.Arrays.asList;
 
 public class ArrivalsView extends View {
 
-    private final List<Arrival> arrivals;
+    private Set<ArrivalGroup> arrivalGroups;
+    private LinkedListMultimap<ArrivalGroup, Eta> etas;
 
     public ArrivalsView(List<Arrival> arrivals) {
         super("arrivals.ftl");
-        this.arrivals = arrivals;
+        groupByDestStopAndRoute(arrivals);
     }
 
-    public Map<String, List<Arrival>> getArrivals() {
-        return getArrivalsGroupedByDest(arrivals);
+    //It would be a map of groups and etas,
+    //but freemarker doesnt allow non-string map keys
+
+    public Set<ArrivalGroup> getArrivalGroups() {
+        return arrivalGroups;
     }
 
-    private Map<String, List<Arrival>> getArrivalsGroupedByDest(List<Arrival> arrivals) {
-        Map<String, List<Arrival>> groupedArrivals = new HashMap<>();
+    public List<Eta> getEtas(ArrivalGroup arrivalGroup) {
+        return etas.get(arrivalGroup);
+    }
+
+    private void groupByDestStopAndRoute(List<Arrival> arrivals) {
+        this.arrivalGroups = Sets.newHashSet();
+        this.etas = LinkedListMultimap.create();
         for (Arrival arrival : arrivals) {
-            if (groupedArrivals.get(arrival.getDestination()) != null) {
-                groupedArrivals.get(arrival.getDestination()).add(arrival);
-            } else {
-                groupedArrivals.put(arrival.getDestination(), Lists.<Arrival>newArrayList(arrival));
-            }
+            ArrivalGroup group = new ArrivalGroup(arrival.getStopName(), arrival.getDestination(), arrival.getRoute());
+            arrivalGroups.add(group);
+            etas.put(group, new Eta(arrival.getEta()));
         }
-        return groupedArrivals;
     }
 
 }

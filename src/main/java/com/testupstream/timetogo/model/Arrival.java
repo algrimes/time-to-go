@@ -24,10 +24,8 @@ public class Arrival {
         this.destination = destination;
     }
 
-    public String getEta() {
-        DateTime arrivalTime = new DateTime(this.eta, DateTimeZone.getDefault());
-        long duration = new Duration(DateTimeFactory.now().getMillis(), arrivalTime.getMillis()).getStandardMinutes();
-        return MessageFormat.format("{0} mins", duration);
+    public long getEta() {
+        return eta;
     }
 
     public String getRoute() {
