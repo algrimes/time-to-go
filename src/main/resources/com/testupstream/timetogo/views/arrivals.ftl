@@ -7,9 +7,8 @@
 </head>
 <body>
 <#list arrivalGroups as group>
-        <h4>Route: ${group.getRoute()} to ${group.getDestination()} (${group.getStop()})</h4>
+        <h4><strong>${group.getRoute()}</strong> to ${group.getDestination()} (${group.getStop()})</h4>
         <table class="table table-striped">
-            <tr><th>ETA</th>
             <#list getEtas(group) as eta>
             <tr><td>${eta.getEta()}</td></tr>
             </#list>
