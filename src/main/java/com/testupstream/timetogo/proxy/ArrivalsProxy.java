@@ -5,5 +5,5 @@ import com.testupstream.timetogo.model.Arrival;
 import java.util.List;
 
 public interface ArrivalsProxy {
-    public List<Arrival> getLocalArrivals();
+    List<Arrival> getLocalArrivals();
 }

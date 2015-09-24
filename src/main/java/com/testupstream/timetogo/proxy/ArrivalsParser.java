@@ -2,13 +2,13 @@ package com.testupstream.timetogo.proxy;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.testupstream.timetogo.model.Arrival;
 
 import java.io.IOException;
 import java.util.List;
-
-import static com.google.inject.internal.util.$Lists.newArrayList;
+import java.util.stream.Collectors;
 
 public class ArrivalsParser {
 
@@ -24,24 +24,26 @@ public class ArrivalsParser {
     }
 
     public List<Arrival> parse(String responseBody) {
-        List<Arrival> arrivals = newArrayList();
-        String cleanBody = "[" + responseBody.replaceAll("\r", ",").replaceAll("\n", "") + "]";
         try {
-            JsonNode jsonNode = objectMapper.readValue(cleanBody, JsonNode.class);
-            if (jsonNode.size() < 2) {
-                return arrivals;
-            }
-            for(int i = 1;i < jsonNode.size(); i++) {
-                arrivals.add(new Arrival(
-                    //Indicies using arcane knowledge of search query for now
-                    jsonNode.get(i).path(ETA_POSITIONAL_INDEX).asLong(),
-                    jsonNode.get(i).path(ROUTE_POSITIONAL_INDEX).asText(),
-                    jsonNode.get(i).path(STOP_NAME_POSITIONAL_INDEX).asText(),
-                    jsonNode.get(i).path(DESTINATION_POSITIONAL_INDEX).asText()));
-            }
+            List<JsonNode> rows = Lists.newArrayList(objectMapper.readValue(cleanBody(responseBody), JsonNode.class));
+
+            return tail(rows).stream().map(row -> new Arrival(
+                    row.path(ETA_POSITIONAL_INDEX).asLong(),
+                    row.path(ROUTE_POSITIONAL_INDEX).asText(),
+                    row.path(STOP_NAME_POSITIONAL_INDEX).asText(),
+                    row.path(DESTINATION_POSITIONAL_INDEX).asText()
+            )).collect(Collectors.toList());
+
         } catch (IOException e) {
             throw new RuntimeException("Unable to parse response", e);
         }
-        return arrivals;
+    }
+
+    private List<JsonNode> tail(List<JsonNode> jsonNodes) {
+        return jsonNodes.subList(1, jsonNodes.size());
+    }
+
+    private String cleanBody(String response) {
+        return "[" + response.replaceAll("\r", ",").replaceAll("\n", "") + "]";
     }
 }

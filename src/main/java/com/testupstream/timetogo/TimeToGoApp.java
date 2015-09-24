@@ -8,10 +8,8 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 public class TimeToGoApp extends Application<TimeToGoConfig> {
 
@@ -34,6 +32,6 @@ public class TimeToGoApp extends Application<TimeToGoConfig> {
     }
 
     public List<Class> getResources() {
-        return Arrays.<Class>asList(ArrivalsResource.class);
+        return Collections.<Class>singletonList(ArrivalsResource.class);
     }
 }
